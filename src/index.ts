@@ -1,18 +1,23 @@
 import express from "express";
-import { json } from "body-parser";
 import "dotenv/config";
 import cors from "cors";
 import { todoRouter } from "./routes/todo";
 import mongoose from "mongoose";
+import { userRouter } from "./routes/user";
+import { clientRouter } from "./routes/client";
 
 const app = express();
+
 app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded());
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
-app.use(json);
 app.use(todoRouter);
+app.use(userRouter);
+// app.use(clientRouter);
 
 if (process.env.DEBUG === "nodejs-project") {
   mongoose.set("debug", true);
